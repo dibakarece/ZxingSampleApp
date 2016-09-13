@@ -461,13 +461,6 @@ int id image 0x7f0e002f
 int id launch_product_query 0x7f0e0008
 int id listMode 0x7f0e0010
 int id list_item 0x7f0e0031
-int id menu_encode 0x7f0e005d
-int id menu_help 0x7f0e005c
-int id menu_history 0x7f0e005a
-int id menu_history_clear_text 0x7f0e005f
-int id menu_history_send 0x7f0e005e
-int id menu_settings 0x7f0e005b
-int id menu_share 0x7f0e0059
 int id middle 0x7f0e001c
 int id multiply 0x7f0e0025
 int id never 0x7f0e0020
@@ -547,9 +540,6 @@ int layout select_dialog_item_material 0x7f03001a
 int layout select_dialog_multichoice_material 0x7f03001b
 int layout select_dialog_singlechoice_material 0x7f03001c
 int layout support_simple_spinner_dropdown_item 0x7f03001d
-int menu capture 0x7f0f0000
-int menu encode 0x7f0f0001
-int menu history 0x7f0f0002
 int raw beep 0x7f060000
 int string abc_action_bar_home_description 0x7f070000
 int string abc_action_bar_home_description_format 0x7f07008a

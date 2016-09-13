@@ -1570,13 +1570,6 @@ containing a value of this type.
         public static final int launch_product_query=0x7f0e0008;
         public static final int listMode=0x7f0e0010;
         public static final int list_item=0x7f0e0031;
-        public static final int menu_encode=0x7f0e005d;
-        public static final int menu_help=0x7f0e005c;
-        public static final int menu_history=0x7f0e005a;
-        public static final int menu_history_clear_text=0x7f0e005f;
-        public static final int menu_history_send=0x7f0e005e;
-        public static final int menu_settings=0x7f0e005b;
-        public static final int menu_share=0x7f0e0059;
         public static final int middle=0x7f0e001c;
         public static final int multiply=0x7f0e0025;
         public static final int never=0x7f0e0020;
@@ -1660,11 +1653,6 @@ containing a value of this type.
         public static final int select_dialog_multichoice_material=0x7f03001b;
         public static final int select_dialog_singlechoice_material=0x7f03001c;
         public static final int support_simple_spinner_dropdown_item=0x7f03001d;
-    }
-    public static final class menu {
-        public static final int capture=0x7f0f0000;
-        public static final int encode=0x7f0f0001;
-        public static final int history=0x7f0f0002;
     }
     public static final class raw {
         public static final int beep=0x7f060000;
