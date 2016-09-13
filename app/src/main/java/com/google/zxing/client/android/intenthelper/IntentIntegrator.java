@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.zxing.client.android;
+package com.google.zxing.client.android.intenthelper;
 
 import java.util.Arrays;
 import java.util.Collection;

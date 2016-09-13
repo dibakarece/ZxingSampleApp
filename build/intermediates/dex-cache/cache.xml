@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\jars\classes.jar"
+        jar="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\libs\internal_impl-22.1.1.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
-        <dex dex="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\pre-dexed\debug\classes-6df7fda065dc985eafb6190eb8b6fc24bd1ccb23.jar" />
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-51f78d561df4583af18003704af069f7baac811b.jar" />
     </item>
     <item
         jar="D:\Android\Android Studio\Installation\SDK\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
@@ -16,11 +16,11 @@
         <dex dex="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-6635467b7cddae5efc41af03babdde26b74058d7.jar" />
     </item>
     <item
-        jar="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\libs\internal_impl-22.1.1.jar"
+        jar="C:\Users\DM_HP\.gradle\caches\modules-2\files-2.1\com.google.zxing\core\3.2.0\e019d15a13a9786f881141d2df6654b8510bce8b\core-3.2.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-51f78d561df4583af18003704af069f7baac811b.jar" />
+        sha1="e019d15a13a9786f881141d2df6654b8510bce8b">
+        <dex dex="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\pre-dexed\debug\core-3.2.0-867203c5224c09a1cc25d346406e4b08f2900811.jar" />
     </item>
     <item
         jar="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\classes.jar"
@@ -30,11 +30,11 @@
         <dex dex="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\pre-dexed\debug\classes-2034605b06ce92c93bb3153566e2654f9adacb25.jar" />
     </item>
     <item
-        jar="C:\Users\DM_HP\.gradle\caches\modules-2\files-2.1\com.google.zxing\core\3.2.0\e019d15a13a9786f881141d2df6654b8510bce8b\core-3.2.0.jar"
+        jar="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="e019d15a13a9786f881141d2df6654b8510bce8b">
-        <dex dex="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\pre-dexed\debug\core-3.2.0-867203c5224c09a1cc25d346406e4b08f2900811.jar" />
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="D:\Android\HomeWork\CitiDCT\zxing\zxing-master\ZxingSampleApp\app\build\intermediates\pre-dexed\debug\classes-6df7fda065dc985eafb6190eb8b6fc24bd1ccb23.jar" />
     </item>
 
 </items>

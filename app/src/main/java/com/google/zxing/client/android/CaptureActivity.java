@@ -45,9 +45,16 @@ import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
+import com.google.zxing.client.android.camera.AmbientLightManager;
 import com.google.zxing.client.android.camera.CameraManager;
 import com.google.zxing.client.android.decode.DecodeFormatManager;
 import com.google.zxing.client.android.decode.DecodeHintManager;
+import com.google.zxing.client.android.helper.BeepManager;
+import com.google.zxing.client.android.helper.FinishListener;
+import com.google.zxing.client.android.helper.InactivityTimer;
+import com.google.zxing.client.android.helper.ViewfinderView;
+import com.google.zxing.client.android.intenthelper.IntentSource;
+import com.google.zxing.client.android.intenthelper.Intents;
 import com.google.zxing.client.android.result.ResultHandler;
 import com.google.zxing.client.android.result.ResultHandlerFactory;
 

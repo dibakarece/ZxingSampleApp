@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.zxing.client.android;
+package com.google.zxing.client.android.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.google.zxing.client.android.PreferencesActivity;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.zxing.client.android;
+package com.google.zxing.client.android.intenthelper;
 
-enum IntentSource {
+public enum IntentSource {
 
   NATIVE_APP_INTENT,
   PRODUCT_SEARCH_LINK,
