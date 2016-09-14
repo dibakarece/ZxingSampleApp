@@ -18,8 +18,6 @@ package com.google.zxing.client.android;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -28,7 +26,6 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Surface;
@@ -47,14 +44,11 @@ import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.camera.AmbientLightManager;
 import com.google.zxing.client.android.camera.CameraManager;
-import com.google.zxing.client.android.decode.DecodeFormatManager;
-import com.google.zxing.client.android.decode.DecodeHintManager;
 import com.google.zxing.client.android.helper.BeepManager;
 import com.google.zxing.client.android.helper.FinishListener;
 import com.google.zxing.client.android.helper.InactivityTimer;
 import com.google.zxing.client.android.helper.ViewfinderView;
-import com.google.zxing.client.android.intenthelper.IntentSource;
-import com.google.zxing.client.android.intenthelper.Intents;
+import com.google.zxing.client.android.helper.ZxingConfig;
 import com.google.zxing.client.android.result.ResultHandler;
 import com.google.zxing.client.android.result.ResultHandlerFactory;
 
@@ -90,7 +84,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private TextView statusView;
     private Result lastResult;
     private boolean hasSurface;
-    private IntentSource source;
     private Collection<BarcodeFormat> decodeFormats;
     private Map<DecodeHintType, ?> decodeHints;
     private String characterSet;
@@ -122,8 +115,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         inactivityTimer = new InactivityTimer(this);
         beepManager = new BeepManager(this);
         ambientLightManager = new AmbientLightManager(this);
-
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
     @Override
@@ -137,14 +128,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         viewfinderView.setCameraManager(cameraManager);
 
-//        resultView = findViewById(R.id.result_view);
         statusView = (TextView) findViewById(R.id.status_view);
 
         handler = null;
         lastResult = null;
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (prefs.getBoolean(PreferencesActivity.KEY_DISABLE_AUTO_ORIENTATION, true)) {
+        if (ZxingConfig.KEY_DISABLE_AUTO_ORIENTATION) {
             setRequestedOrientation(getCurrentOrientation());
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
@@ -154,40 +143,18 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         beepManager.updatePrefs();
         ambientLightManager.start(cameraManager);
-
         inactivityTimer.onResume();
-        Intent intent = getIntent();
 
-        source = IntentSource.NONE;
         decodeFormats = null;
         characterSet = null;
 
-        if (intent != null) {
-            String action = intent.getAction();
-            if (Intents.Scan.ACTION.equals(action)) {
-                // Scan the formats the intent requested, and return the result to the calling activity.
-                source = IntentSource.NATIVE_APP_INTENT;
-                decodeFormats = DecodeFormatManager.parseDecodeFormats(intent);
-                decodeHints = DecodeHintManager.parseDecodeHints(intent);
-                if (intent.hasExtra(Intents.Scan.WIDTH) && intent.hasExtra(Intents.Scan.HEIGHT)) {
-                    int width = intent.getIntExtra(Intents.Scan.WIDTH, 0);
-                    int height = intent.getIntExtra(Intents.Scan.HEIGHT, 0);
-                    if (width > 0 && height > 0) {
-                        cameraManager.setManualFramingRect(width, height);
-                    }
-                }
-                if (intent.hasExtra(Intents.Scan.CAMERA_ID)) {
-                    int cameraId = intent.getIntExtra(Intents.Scan.CAMERA_ID, -1);
-                    if (cameraId >= 0) {
-                        cameraManager.setManualCameraId(cameraId);
-                    }
-                }
-                String customPromptMessage = intent.getStringExtra(Intents.Scan.PROMPT_MESSAGE);
-                if (customPromptMessage != null) {
-                    statusView.setText(customPromptMessage);
-                }
-            }
-        }
+        // For Custom Intent
+//        Intent intent = getIntent();
+//        decodeFormats = DecodeFormatManager.parseDecodeFormats(intent);
+//        decodeHints = DecodeHintManager.parseDecodeHints(intent);
+//        cameraManager.setManualFramingRect(Scan.WIDTH, Scan.HEIGHT);
+//        cameraManager.setManualCameraId(intent.getIntExtra(Intents.Scan.CAMERA_ID, -1));
+//        statusView.setText(intent.getStringExtra(Intents.Scan.PROMPT_MESSAGE));
 
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
@@ -251,16 +218,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                if (source == IntentSource.NATIVE_APP_INTENT) {
-                    setResult(RESULT_CANCELED);
-                    finish();
-                    return true;
-                }
-                if ((source == IntentSource.NONE || source == IntentSource.ZXING_LINK) && lastResult != null) {
-                    restartPreviewAfterDelay(0L);
-                    return true;
-                }
-                break;
+                setResult(RESULT_CANCELED);
+                finish();
+                return true;
             case KeyEvent.KEYCODE_FOCUS:
             case KeyEvent.KEYCODE_CAMERA:
                 // Handle these events so they don't launch the Camera app
@@ -332,12 +292,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             drawResultPoints(barcode, scaleFactor, rawResult);
         }
 
-        switch (source) {
-            case NATIVE_APP_INTENT:
-            case NONE:
-                handleDecodeInternally(rawResult, resultHandler, barcode);
-                break;
-        }
+        handleDecodeInternally(rawResult, resultHandler, barcode);
     }
 
     /**
@@ -396,9 +351,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if ((source == IntentSource.NONE || source == IntentSource.ZXING_LINK) && lastResult != null) {
-                    restartPreviewAfterDelay(0L);
-                }
+                restartPreviewAfterDelay(0L);
             }
         }, NEXT_SCAN_DELAY_MS);
     }

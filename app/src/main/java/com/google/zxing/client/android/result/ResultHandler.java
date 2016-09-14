@@ -16,30 +16,27 @@
 
 package com.google.zxing.client.android.result;
 
-import com.google.zxing.Result;
-import com.google.zxing.client.android.Contents;
-import com.google.zxing.client.android.helper.LocaleManager;
-import com.google.zxing.client.android.PreferencesActivity;
-import com.google.zxing.client.android.R;
-import com.google.zxing.client.result.ParsedResult;
-import com.google.zxing.client.result.ParsedResultType;
-import com.google.zxing.client.result.ResultParser;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.google.zxing.Result;
+import com.google.zxing.client.android.R;
+import com.google.zxing.client.android.helper.LocaleManager;
+import com.google.zxing.client.android.helper.ZxingConfig;
+import com.google.zxing.client.result.ParsedResult;
+import com.google.zxing.client.result.ParsedResultType;
+import com.google.zxing.client.result.ResultParser;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Locale;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * A base class for the Android-specific barcode handlers. These allow the app to polymorphically
@@ -201,28 +198,6 @@ public abstract class ResultHandler {
     putExtra(intent, ContactsContract.Intents.Insert.NAME, names != null ? names[0] : null);
 
     putExtra(intent, ContactsContract.Intents.Insert.PHONETIC_NAME, pronunciation);
-
-    int phoneCount = Math.min(phoneNumbers != null ? phoneNumbers.length : 0, Contents.PHONE_KEYS.length);
-    for (int x = 0; x < phoneCount; x++) {
-      putExtra(intent, Contents.PHONE_KEYS[x], phoneNumbers[x]);
-      if (phoneTypes != null && x < phoneTypes.length) {
-        int type = toPhoneContractType(phoneTypes[x]);
-        if (type >= 0) {
-          intent.putExtra(Contents.PHONE_TYPE_KEYS[x], type);
-        }
-      }
-    }
-
-    int emailCount = Math.min(emails != null ? emails.length : 0, Contents.EMAIL_KEYS.length);
-    for (int x = 0; x < emailCount; x++) {
-      putExtra(intent, Contents.EMAIL_KEYS[x], emails[x]);
-      if (emailTypes != null && x < emailTypes.length) {
-        int type = toEmailContractType(emailTypes[x]);
-        if (type >= 0) {
-          intent.putExtra(Contents.EMAIL_TYPE_KEYS[x], type);
-        }
-      }
-    }
 
     ArrayList<ContentValues> data = new ArrayList<>();
     if (urls != null) {
@@ -471,9 +446,7 @@ public abstract class ResultHandler {
   }
 
   private String parseCustomSearchURL() {
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-    String customProductSearch = prefs.getString(PreferencesActivity.KEY_CUSTOM_PRODUCT_SEARCH,
-        null);
+    String customProductSearch = ZxingConfig.KEY_CUSTOM_PRODUCT_SEARCH;
     if (customProductSearch != null && customProductSearch.trim().isEmpty()) {
       return null;
     }
@@ -487,7 +460,7 @@ public abstract class ResultHandler {
     try {
       text = URLEncoder.encode(text, "UTF-8");
     } catch (UnsupportedEncodingException e) {
-      // can't happen; UTF-8 is always supported. Continue, I guess, without encoding      
+      // can't happen; UTF-8 is always supported. Continue, I guess, without encoding
     }
     String url = customProductSearch;
     if (rawResult != null) {
